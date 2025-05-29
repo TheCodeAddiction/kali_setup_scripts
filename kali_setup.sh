@@ -54,28 +54,17 @@ git config --global user.name "Code Addict"
 echo -e "${GREEN}Git configured with user 'Code Addict'.${NC}"
 
 
-
 echo -e "\n${RED}==> Creating Python virtual environment...${NC}"
-mkdir -p ~/.🐍
-python3 -m venv ~/.🐍
-source ~/.🐍/bin/activate
-
-# Avoid default virtualenv prompt
-if ! grep -q 'VIRTUAL_ENV_DISABLE_PROMPT=1' ~/.zshrc; then
-    echo 'export VIRTUAL_ENV_DISABLE_PROMPT=1' >> ~/.zshrc
-fi
-
-# Add alias and custom prompt
-if ! grep -q 'alias pentestenv=' ~/.zshrc; then
-    echo 'alias pentestenv="source ~/.🐍/bin/activate"' >> ~/.zshrc
+mkdir -p ~/.pentest-venv
+python3 -m venv ~/.pentest-venv
+source ~/.pentest-venv/bin/activate
+if ! grep -q 'pentestenv' ~/.zshrc; then
+    echo 'alias pentestenv="source ~/.pentest-venv/bin/activate"' >> ~/.zshrc
     echo 'pentestenv' >> ~/.zshrc
-    echo -e "${GREEN}Added virtualenv alias and auto-activation to ~/.zshrc${NC}"
+    echo -e "${GREEN}Added virtualenv alias to ~/.zshrc${NC}"
 fi
 
-# Add custom prompt if not present
-if ! grep -q 'PROMPT=' ~/.zshrc; then
-    echo 'PROMPT="%F{green}🐍 %f%~ %# "' >> ~/.zshrc
-fi
+
 
 echo -e "\n${RED}==> Installing impacket...${NC}"
 python3 -m pip install impacket

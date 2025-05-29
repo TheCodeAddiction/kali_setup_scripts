@@ -39,40 +39,6 @@ xfconf-query -c xsettings -p /Net/IconThemeName -s "Papirus-Dark"
 echo -e "${RED}==> Restarting XFCE Window Manager...${NC}"
 xfwm4 --replace & disown
 
-# -----------------------------
-# Set Wallpaper
-# -----------------------------
-echo -e "${RED}==> Setting Nordic wallpaper...${NC}"
-
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-WALLPAPER_PATH="${SCRIPT_DIR}/Nordic-mountain-wallpaper.jpeg"
-
-WALLPAPER_KEYS=$(xfconf-query -c xfce4-desktop -l | grep last-image)
-
-for KEY in $WALLPAPER_KEYS; do
-    echo -e "${YELLOW}  -> Setting $KEY to $WALLPAPER_PATH${NC}"
-    xfconf-query -c xfce4-desktop -p "$KEY" -s "$WALLPAPER_PATH"
-done
-
-xfdesktop --reload
-
-# -----------------------------
-# Terminal Font Fix
-# -----------------------------
-echo -e "${RED}==> Setting terminal font to FiraCode Nerd Font 12...${NC}"
-
-TERMINAL_CONF="$HOME/.config/xfce4/terminal/terminalrc"
-
-mkdir -p "$(dirname "$TERMINAL_CONF")"
-touch "$TERMINAL_CONF"
-
-# Clean up old settings
-sed -i '/^UseSystemFont/d' "$TERMINAL_CONF"
-sed -i '/^FontName/d' "$TERMINAL_CONF"
-
-# Apply new font settings
-echo "UseSystemFont=FALSE" >> "$TERMINAL_CONF"
-echo "FontName=FiraCode Nerd Font 12" >> "$TERMINAL_CONF"
 
 echo -e "${GREEN}==> Nordic theme, icons, wallpaper, and terminal font applied successfully!${NC}"
 
