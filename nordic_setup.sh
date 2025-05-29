@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # -----------------------------
-# Nordic Theme + Wallpaper Installer for XFCE (Kali Linux)
+# Nordic Theme + Terminal Font + Wallpaper Setup for XFCE (Kali Linux)
 # -----------------------------
 
 set -e  # Exit on error
@@ -26,12 +26,12 @@ xfconf-query -c xsettings -p /Net/ThemeName -s "Nordic"
 echo "[+] Applying Nordic Window Manager theme..."
 xfconf-query -c xfwm4 -p /theme -n -t string -s "Nordic"
 
-# Optional: Install and apply Papirus icon theme
+# Install and apply Papirus icon theme
 echo "[+] Installing and applying Papirus-Dark icon theme..."
 sudo apt install -y papirus-icon-theme
 xfconf-query -c xsettings -p /Net/IconThemeName -s "Papirus-Dark"
 
-# Restart window manager to apply
+# Restart window manager
 echo "[+] Restarting XFCE Window Manager..."
 xfwm4 --replace & disown
 
@@ -40,22 +40,17 @@ xfwm4 --replace & disown
 # -----------------------------
 echo "[+] Setting Nordic wallpaper..."
 
-# Get absolute path to script and wallpaper
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 WALLPAPER_PATH="${SCRIPT_DIR}/Nordic-mountain-wallpaper.jpeg"
 
-# Get all known last-image properties (covers all monitors/workspaces)
 WALLPAPER_KEYS=$(xfconf-query -c xfce4-desktop -l | grep last-image)
 
-# Set wallpaper for each key
 for KEY in $WALLPAPER_KEYS; do
     echo "  -> Setting $KEY to $WALLPAPER_PATH"
     xfconf-query -c xfce4-desktop -p "$KEY" -s "$WALLPAPER_PATH"
 done
 
-# Reload desktop to apply wallpaper immediately
 xfdesktop --reload
 
-echo "[✓] Wallpaper applied across all monitors and workspaces."
-
+echo "[✓] Nordic theme, icons, wallpaper, and terminal font applied successfully!"
 
