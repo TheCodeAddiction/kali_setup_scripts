@@ -91,6 +91,36 @@ fi
 echo -e "${RED}==> Installing impacket${NC}\n"
 python3 -m pipx install impacket
 
+# -----------------------------
+# Zsh / oh-my-zsh / Powerlevel10k setup
+# -----------------------------
+echo -e "${RED}==> Installing Zsh plugins and Powerlevel10k theme...${NC}"
 
+sudo apt install -y zsh-syntax-highlighting zsh-autosuggestions
+
+if [ ! -d "${ZSH:-$HOME/.oh-my-zsh}" ]; then
+    echo -e "${RED}==> Installing oh-my-zsh...${NC}"
+    export RUNZSH=no
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+fi
+
+echo -e "${RED}==> Installing Powerlevel10k theme...${NC}"
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git \
+  ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/powerlevel10k
+
+# Update .zshrc config
+echo -e "${RED}==> Configuring .zshrc...${NC}"
+sed -i 's/^ZSH_THEME=.*/ZSH_THEME="powerlevel10k\/powerlevel10k"/' ~/.zshrc
+
+# Add plugins if not already added
+if ! grep -q "zsh-autosuggestions" ~/.zshrc; then
+    sed -i 's/^plugins=(\(.*\))/plugins=(\1 zsh-autosuggestions zsh-syntax-highlighting)/' ~/.zshrc
+fi
+
+# Ensure the plugin sourcing is correct
+grep -qxF 'source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh' ~/.zshrc || echo 'source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh' >> ~/.zshrc
+grep -qxF 'source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh' ~/.zshrc || echo 'source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh' >> ~/.zshrc
+
+echo -e "${GREEN}==> oh-my-zsh and Powerlevel10k setup complete.${NC}"
 echo -e "${GREEN}==> All done!${NC}"
 
