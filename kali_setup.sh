@@ -35,8 +35,12 @@ echo -e "\n${RED}==> Adjusting permissions on /var/www/html...${NC}"
 sudo chown -R "$USER":"$USER" /var/www/html
 sudo chmod -R 755 /var/www/html
 
-echo -e "\n${RED}==> Starting apache webserver...${NC}"
-sudo service apache2 start
+echo -e "\n${RED}==> apache will start on boot...${NC}"
+sudo systemctl enable apache2
+
+echo -e "\n${RED}==> Adding alias for fast CD movement...${NC}"
+echo "alias cg='cd ~ && cd git'" >> ~/.zshrc
+echo "alias cw='cd /var/www/html'" >> ~/.zshrc
 
 
 echo -e "\n${RED}==> Creating Git directory...${NC}"
