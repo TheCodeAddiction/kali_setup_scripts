@@ -24,7 +24,7 @@ sudo apt update && sudo apt upgrade -y
 
 
 echo -e "\n${RED}==> Installing required packages...${NC}"
-sudo apt install -y python3-venv python3-pip gedit openssh-client neo4j openjdk-11-jdk
+sudo apt install -y python3-venv python3-pip gedit openssh-client neo4j openjdk-11-jdk bloodhound.py
 
 sudo systemctl enable neo4j.service
 
