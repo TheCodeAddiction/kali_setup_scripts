@@ -14,12 +14,17 @@ set -e  # Exit immediately if a command exits with a non-zero status
 # -----------------------------
 # System setup
 # -----------------------------
+
+echo -e "\n${RED}==> Mapping neo4j's repo...${NC}"
+curl -fsSL https://debian.neo4j.com/neotechnology.gpg.key |sudo gpg --dearmor -o /usr/share/keyrings/neo4j.gpg
+echo "deb [signed-by=/usr/share/keyrings/neo4j.gpg] https://debian.neo4j.com stable 4.1" | sudo tee -a /etc/apt/sources.list.d/neo4j.list
+
 echo -e "\n${RED}==> Updating and Upgrading Packages...${NC}"
 sudo apt update && sudo apt upgrade -y
 
 
 echo -e "\n${RED}==> Installing required packages...${NC}"
-sudo apt install -y python3-venv python3-pip gedit openssh-client
+sudo apt install -y python3-venv python3-pip gedit openssh-client neo4j
 
 
 echo -e "\n${RED}==> Setting up workspaces...${NC}"
