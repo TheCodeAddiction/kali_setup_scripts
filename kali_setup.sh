@@ -76,11 +76,6 @@ fi
 
 
 
-echo -e "\n${RED}==> Installing impacket...${NC}"
-python3 -m pip install impacket
-
-
-
 # -----------------------------
 # GitHub-based webserver setup
 # -----------------------------
