@@ -24,8 +24,9 @@ sudo apt update && sudo apt upgrade -y
 
 
 echo -e "\n${RED}==> Installing required packages...${NC}"
-sudo apt install -y python3-venv python3-pip gedit openssh-client neo4j
+sudo apt install -y python3-venv python3-pip gedit openssh-client neo4j openjdk-11-jdk
 
+sudo systemctl enable neo4j.service
 
 echo -e "\n${RED}==> Setting up workspaces...${NC}"
 xfconf-query -c xfwm4 -p /general/workspace_names -t string -s "Infra" -t string -s "Recon" -t string -s "Exploit" -t string -s "Misc" --create
