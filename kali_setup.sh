@@ -37,10 +37,6 @@ sudo dpkg-reconfigure -f noninteractive keyboard-configuration
 sudo systemctl restart keyboard-setup.service
 
 
-echo -e "\n${RED}==> Adjusting permissions on /var/www/html...${NC}"
-sudo chown -R "$USER":"$USER" /var/www/html
-sudo chmod -R 755 /var/www/html
-
 echo -e "\n${RED}==> apache will start on boot...${NC}"
 sudo systemctl enable apache2
 
@@ -97,12 +93,15 @@ if [[ "$do_git" =~ ^[Yy]$ ]]; then
     read -p "Press Enter once the key has been added to GitHub..."
 
     TEMP_DIR=$(mktemp -d)
-    git clone git@github.com:TheCodeAddiction/Apache-OCS-Bins.git "$TEMP_DIR"
+    git clone git@github.com:TheCodeAddiction/html.git "$TEMP_DIR"
 
-    rm -rf "$TEMP_DIR/.git"
-    sudo cp -r "$TEMP_DIR/"* /var/www/html/
-    sudo cp -r "$TEMP_DIR/".* /var/www/html/ 2>/dev/null || true
-    rm -rf "$TEMP_DIR"
+    echo -e "\n${RED}==> Replacing /var/www/html with cloned Git repo...${NC}"
+    sudo rm -rf /var/www/html
+    sudo mv "$TEMP_DIR" /var/www/html
+
+    echo -e "\n${RED}==> Fixing permissions on /var/www/html...${NC}"
+    sudo chown -R "$USER":"$USER" /var/www/html
+    sudo chmod -R 755 /var/www/html
 else
     echo -e "${YELLOW}Skipping webserver setup.${NC}"
 fi
