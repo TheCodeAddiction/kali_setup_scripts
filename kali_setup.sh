@@ -24,7 +24,7 @@ sudo apt update && sudo apt upgrade -y
 
 
 echo -e "\n${RED}==> Installing required packages...${NC}"
-sudo apt install -y python3-venv python3-pip gedit openssh-client neo4j openjdk-11-jdk bloodhound.py bloodhound krb5-user dirsearch smb4k keepass2 docker.io python3-wsgidav certipy-ad
+sudo apt install -y python3-venv python3-pip gedit openssh-client neo4j openjdk-11-jdk bloodhound.py bloodhound krb5-user dirsearch smb4k keepass2 docker.io python3-wsgidav certipy-ad coercer
 
 sudo systemctl enable neo4j.service
 sudo systemctl enable docker --now
